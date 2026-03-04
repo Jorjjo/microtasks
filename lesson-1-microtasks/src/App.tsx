@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { CarsComponent } from './CarsComponent';
+import { MoneyComponent } from './MoneyComponent';
 
 const topCars = [
     { manufacturer: 'BMW', model: 'm5cs', id: 1 },
@@ -9,6 +10,48 @@ const topCars = [
 ];
 
 function App() {
+    type FilterType = 'all' | 'RUBLS' | 'Dollars';
+
+    const money = [
+        { banknots: 'Dollars', value: 100, number: ' a1234567890' },
+        { banknots: 'Dollars', value: 50, number: ' z1234567890' },
+        { banknots: 'RUBLS', value: 100, number: ' w1234567890' },
+        { banknots: 'Dollars', value: 100, number: ' e1234567890' },
+        { banknots: 'Dollars', value: 50, number: ' c1234567890' },
+        { banknots: 'RUBLS', value: 100, number: ' r1234567890' },
+        { banknots: 'Dollars', value: 50, number: ' x1234567890' },
+        { banknots: 'RUBLS', value: 50, number: ' v1234567890' },
+    ];
+
+    const [currentFilter, setCurrentFilter] = useState<FilterType>('all');
+
+    function onButtonclick(buttonName: FilterType) {
+        setCurrentFilter(buttonName);
+    }
+
+    const filterdeMoney =
+        currentFilter === 'all'
+            ? money
+            : money.filter((item) => item.banknots === currentFilter);
+
+    const buttonHehe: Array<{
+        title: 'all' | 'RUBLS' | 'Dollars';
+        onButtonclick: () => void;
+    }> = [
+        {
+            title: 'all',
+            onButtonclick: () => onButtonclick('all'),
+        },
+        {
+            title: 'RUBLS',
+            onButtonclick: () => onButtonclick('RUBLS'),
+        },
+        {
+            title: 'Dollars',
+            onButtonclick: () => onButtonclick('Dollars'),
+        },
+    ];
+    // -----------------------------------------//
     let [a, setA] = useState(1);
     const onClickHandler = () => {
         setA(++a);
@@ -23,6 +66,10 @@ function App() {
             <h1>{a}</h1>
             <button onClick={onClickHandler}>number</button>
             <button onClick={onClickResetHandler}>0</button>
+            <MoneyComponent
+                currentMoney={filterdeMoney}
+                buttonHehe={buttonHehe}
+            />
         </div>
     );
 }
