@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import { CarsComponent } from './CarsComponent';
-import { MoneyComponent } from './MoneyComponent';
+import { Money } from './Money';
+import { Cars } from './1.2.Map/Cars';
 
 const topCars = [
     { manufacturer: 'BMW', model: 'm5cs', id: 1 },
@@ -51,6 +51,7 @@ function App() {
             onButtonclick: () => onButtonclick('Dollars'),
         },
     ];
+
     // -----------------------------------------//
     let [a, setA] = useState(1);
     const onClickHandler = () => {
@@ -62,16 +63,31 @@ function App() {
     };
     return (
         <div>
-            <CarsComponent cars={topCars} />
+            <Cars cars={topCars} />
             <h1>{a}</h1>
             <button onClick={onClickHandler}>number</button>
             <button onClick={onClickResetHandler}>0</button>
-            <MoneyComponent
-                currentMoney={filterdeMoney}
-                buttonHehe={buttonHehe}
-            />
+            <Money money={filterdeMoney} />
+            <MoneyFilter filters={buttonHehe} />
         </div>
     );
 }
+
+type MoneyFilterProps = {
+    filters: Array<{
+        title: 'all' | 'RUBLS' | 'Dollars';
+        onButtonclick: () => void;
+    }>;
+};
+
+export const MoneyFilter = ({ filters }: MoneyFilterProps) => {
+    return filters.map((item, index) => {
+        return (
+            <button key={index} onClick={item.onButtonclick}>
+                {item.title}
+            </button>
+        );
+    });
+};
 
 export default App;

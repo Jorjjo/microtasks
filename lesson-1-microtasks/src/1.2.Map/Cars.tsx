@@ -4,11 +4,11 @@ type Car = {
     id: number;
 };
 
-type CarsComponentProps = {
+type CarsProps = {
     cars: Array<Car>;
 };
 
-export const CarsComponent = ({ cars }: CarsComponentProps) => {
+export const Cars = ({ cars }: CarsProps) => {
     return (
         <table>
             <thead>
